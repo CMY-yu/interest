@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- <meta charset="UTF-8"> -->
+	<!-- <meta name="viewport" content="width=device-width,inital-scale=1.0"> -->
+	<title>照片墙</title>
+	<style>
+        body{
+            overflow: hidden;
+			perspective: 800px;
+			background-color: #111;
+		}
+		
+		#wrap{
+			width: 133px;
+			height: 200px;
+			/* border: 1px solid red ; */
+			margin: 240px auto;
+			transform-style: preserve-3d;
+			transform:rotateX(-20deg) rotateY(0deg) ;
+		}
+		#wrap img{
+			width: 133px;
+			height: 200px;
+			position:absolute;
+			box-shadow: 0 0 8px #fff;
+			box-shadow: 0 0 15px #fff;
+			-webkit-box-reflect: below 15px linear-gradient(transparent,transparent,#005);
+		}
+		
+	</style>
+</head>
+<body>
+	<div id="box">
+		<div id="wrap">
+			<img src="/interest/1.jpg" alt=""> 
+			<img src="/interest/2.jpg" alt=""> 
+			<img src="/interest/3.png" alt=""> 
+			<img src="/interest/4.jpg" alt=""> 
+			<img src="/interest/5.jpg" alt=""> 
+			<img src="/interest/6.png" alt=""> 
+			<img src="/interest/7.jpg" alt=""> 
+			<img src="/interest/8.jpg" alt=""> 
+			<img src="/interest/9.jpeg" alt=""> 
+			<img src="/interest/10.jpeg" alt=""> 
+			<img src="/interest/11.jpg" alt="">  
+			<img src="/interest/12.jpg" alt="">
+			<video autoplay="autoplay" loop>
+				<source src="/interest/遗失了你.mp3"></source>
+			</video>  
+		</div>
+	</div>
+<script src="/interest/jquery-1.12.4.js"></script>	
+<script>
+
+	var images =  document.querySelectorAll('img');
+	var lenth = images.length;
+	var angle = 360 / lenth;
+
+	var oWrap = document.getElementById("wrap");
+	
+	// 要解决的：强制转换成数组类型
+	images = Array.from(images);
+
+	window.onload = function(){
+		images.forEach(function (e,index) {
+			// console.log(e);
+			e.style.transform ="rotateY("+index * angle+"deg) translateZ(350px)";
+			e.style.transition ="1s " +(lenth-index)*0.1+ "s" ;
+		});
+		
+	}
+	let sum_angle =0;
+		setInterval(() => {
+			sum_angle += 1;
+			oWrap.style.transform = `rotateY(${sum_angle}deg) rotateZ(${sum_angle}deg)`;
+		}, 200);
+		
+	var newX,newY,lastX,lastY,minusX,minusY,rotX = -20,rotY=0;
+	document.onmousedown = function(e){
+		lastX = e.clientX;
+		lastY = e.clientY;
+
+		this.onmousemove = function(e){
+			newX = e.clientX;
+			newY = e.clientY;
+
+			minusX = newX-lastX;
+			minusY = newY-lastY;
+
+			rotX += minusY*0.1;
+			rotY -= minusX*0.2;
+
+			oWrap.style.transform = "rotateX("+rotX+"deg) rotateY("+rotY+"deg) "
+			lastX = newX;
+			lastY = newY;
+			
+		}
+		this.onmouseup = function(e){
+			this.onmousemove = null;
+			
+		}
+	}
+</script>
+</body>
+</html>
