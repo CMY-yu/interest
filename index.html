@@ -1,27 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
+	<!-- <meta charset="UTF-8"> -->
 	<!-- <meta name="viewport" content="width=device-width,inital-scale=1.0"> -->
 	<title>照片墙</title>
 	<style>
+		html {
+			background: #000;
+			/*背景颜色*/
+			height: 100%;
+		}
         body{
             overflow: hidden;
 			perspective: 800px;
-			background-color: #111;
+			display: block;
 		}
-		
+		#box{
+			position: absolute;
+			top: 890px;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			margin:auto;
+			width:  220px;
+			height:   260px;
+		}
 		#wrap{
-			width: 133px;
-			height: 200px;
+			width:  220px;
+			height:  260px;
+			margin: 0 auto;
 			/* border: 1px solid red ; */
-			margin: 240px auto;
+			/* margin: 240px auto; */
 			transform-style: preserve-3d;
-			transform:rotateX(-20deg) rotateY(0deg) ;
+			transform:rotateX(-2deg) rotateY(0deg) ;
+			/* 匀速自动转动： */
+			-webkit-animation: rotate 20s infinite;
+			animation-timing-function: linear;
 		}
+		@-webkit-keyframes rotate {
+			from {
+				transform: rotateX(0deg) rotateY(0deg) ;
+			}
+			to {
+				transform: rotateX(360deg) rotateY(360deg);
+			}
+		}
+
 		#wrap img{
-			width: 133px;
-			height: 200px;
+			width:  220px;
+			height:   260px;
 			position:absolute;
 			box-shadow: 0 0 8px #fff;
 			box-shadow: 0 0 15px #fff;
@@ -33,24 +60,22 @@
 <body>
 	<div id="box">
 		<div id="wrap">
-			<img src="/interest/1.jpg" alt=""> 
-			<img src="/interest/2.jpg" alt=""> 
-			<img src="/interest/3.png" alt=""> 
-			<img src="/interest/4.jpg" alt=""> 
-			<img src="/interest/5.jpg" alt=""> 
-			<img src="/interest/6.png" alt=""> 
-			<img src="/interest/7.jpg" alt=""> 
-			<img src="/interest/8.jpg" alt=""> 
-			<img src="/interest/9.jpeg" alt=""> 
-			<img src="/interest/10.jpeg" alt=""> 
-			<img src="/interest/11.jpg" alt="">  
-			<img src="/interest/12.jpg" alt="">
-			<video autoplay="autoplay" loop>
-				<source src="/interest/遗失了你.mp3"></source>
-			</video>  
+			<img src="../images/1.jpg" alt=""> 
+			<img src="../images/2.jpg" alt=""> 
+			<img src="../images/3.png" alt=""> 
+			<img src="../images/4.jpg" alt=""> 
+			<img src="../images/5.jpg" alt=""> 
+			<img src="../images/6.png" alt=""> 
+			<img src="../images/7.jpg" alt=""> 
+			<img src="../images/8.jpg" alt=""> 
+			<img src="../images/9.jpeg" alt=""> 
+			<img src="../images/10.jpeg" alt=""> 
+			<img src="../images/11.jpg" alt="">  
+			<img src="../images/12.jpg" alt="">
 		</div>
 	</div>
-<script src="/interest/jquery-1.12.4.js"></script>	
+	<video src="/viedo/遗失了你.mp3" autoplay loop controls id="myVideo" muted="muted"></video>
+<script src="../js/jquery-1.12.4.js"></script>	
 <script>
 
 	var images =  document.querySelectorAll('img');
@@ -61,21 +86,21 @@
 	
 	// 要解决的：强制转换成数组类型
 	images = Array.from(images);
+	
 
+	let video = document.getElementById("myVideo");
 	window.onload = function(){
+		// muted = true:静音
+		if(video.muted){
+			video.muted = false;
+		}
 		images.forEach(function (e,index) {
 			// console.log(e);
-			e.style.transform ="rotateY("+index * angle+"deg) translateZ(350px)";
+			e.style.transform ="rotateY("+index * angle+"deg) translateZ(450px)";
 			e.style.transition ="1s " +(lenth-index)*0.1+ "s" ;
 		});
 		
 	}
-	let sum_angle =0;
-		setInterval(() => {
-			sum_angle += 1;
-			oWrap.style.transform = `rotateY(${sum_angle}deg) rotateZ(${sum_angle}deg)`;
-		}, 200);
-		
 	var newX,newY,lastX,lastY,minusX,minusY,rotX = -20,rotY=0;
 	document.onmousedown = function(e){
 		lastX = e.clientX;
@@ -102,5 +127,6 @@
 		}
 	}
 </script>
+
 </body>
 </html>
